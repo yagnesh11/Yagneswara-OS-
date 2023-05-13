@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+int main() {
+    int n, head, i, j, total_distance = 0, curr_distance, prev_track, next_track;
+    int* tracks;
+    
+    printf("Enter the number of tracks: ");
+    scanf("%d", &n);
+    
+    tracks = (int*)malloc(n * sizeof(int));
+    
+    printf("Enter the track numbers:\n");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &tracks[i]);
+    }
+    
+    printf("Enter the initial position of the head: ");
+    scanf("%d", &head);
+    
+    tracks[n] = head; 
+    
+    n++;
+    
+    
+    for (i = 0; i < n; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (tracks[i] > tracks[j]) {
+                int temp = tracks[i];
+                tracks[i] = tracks[j];
+                tracks[j] = temp;
+            }
+        }
+    }
+    
+    
+    for (i = 0; i < n; i++) {
+        if (tracks[i] == head) {
+            break;
+        }
+    }
+    
+    printf("\nSCAN disk scheduling algorithm (Right):\n");
+    prev_track = head;
+    for (j = i + 1; j < n; j++) {
+        next_track = tracks[j];
+        curr_distance = abs(next_track - prev_track);
+        total_distance += curr_distance;
+        printf("Move from %d to %d with seek distance %d\n", prev_track, next_track, curr_distance);
+        prev_track = next_track;
+    }
+    
+    printf("\nSCAN disk scheduling algorithm (Left):\n");
+    total_distance += abs(tracks[n - 1] - tracks[i - 1]);
+    prev_track = head;
+    for (j = i - 1; j >= 0; j--) {
+        next_track = tracks[j];
+        curr_distance = abs(next_track - prev_track);
+        total_distance += curr_distance;
+        printf("Move from %d to %d with seek distance %d\n", prev_track, next_track, curr_distance);
+        prev_track = next_track;
+    }
+    
+    printf("\nTotal seek distance: %d\n", total_distance);
+    
+    free(tracks);
+    return 0;
+}
