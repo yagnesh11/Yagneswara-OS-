@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_USERS 3
+#define MAX_FILES 3
+
+struct user {
+    char name[20];
+    struct file {
+        char name[20];
+    } files[MAX_FILES];
+} users[MAX_USERS];
+
+int main() {
+    int i, j;
+
+    for (i = 0; i < MAX_USERS; i++) 
+	{
+        printf("Enter name of user %d: ", i+1);
+        scanf("%s", users[i].name);
+
+        
+        for (j = 0; j < MAX_FILES; j++) 
+		{
+			if(i == 1 || i== 2)
+			{
+            	printf("Enter name of file %d for user %d: ", j+1, i+1);
+            	scanf("%s", users[i].files[j].name);
+    		}
+    		else
+    		{
+    			printf("Enter name of file %d for user %d: ", j+1, i+1);
+            	scanf("%s", users[i].files[j].name);
+			}
+		}
+    }
+
+    for (i = 0; i < MAX_USERS; i++) {
+        printf("User %d: %s\n", i+1, users[i].name);
+        for (j = 0; j < MAX_FILES; j++) {
+            printf("\tFile %d: %s\n", j+1, users[i].files[j].name);
+        }
+    }
+
+    return 0;
+}
